@@ -197,3 +197,28 @@ git status -sb
 git branch -vv
 git remote -v
 ```
+
+### 7.6 一键更新官方代码（upstream -> 本地 main）
+
+单次直接执行（推荐先在 `main` 分支）：
+
+```bash
+git fetch upstream && git checkout main && git pull --ff-only upstream main
+```
+
+长期复用（配置成一个命令）：
+
+```bash
+git config --global alias.up '!git fetch upstream && git checkout main && git pull --ff-only upstream main'
+```
+
+配置后每次更新官方代码只需：
+
+```bash
+git up
+```
+
+说明：
+
+- 这条命令只更新本地 `main`，不会自动改动你的学习分支。
+- 你在学习分支时，建议先执行 `git up`，再回到学习分支执行 `git rebase main`（或 `git merge main`）。
