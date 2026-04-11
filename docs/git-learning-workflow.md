@@ -151,3 +151,49 @@ git remote -v
 - 安全：不容易误推官方仓库
 - 清晰：更新来源与推送目标职责分离
 - 可持续：后续换任何项目都可按本文模板复用
+
+---
+
+## 7. 一页命令速查表（可直接复制）
+
+### 7.1 新项目首次配置（clone 后）
+
+```bash
+git remote rename origin upstream
+git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git branch --set-upstream-to=upstream/main main
+git config remote.pushDefault origin
+```
+
+### 7.2 每天开始学习前（同步官方）
+
+```bash
+git checkout main
+git pull --ff-only upstream main
+```
+
+### 7.3 开一个学习分支并推送到自己的 Fork
+
+```bash
+git checkout -b study/<主题>
+git add .
+git commit -m "chore: learning changes"
+git push -u origin study/<主题>
+```
+
+### 7.4 学习分支跟进官方最新（推荐）
+
+```bash
+git checkout main
+git pull --ff-only upstream main
+git checkout study/<主题>
+git rebase main
+```
+
+### 7.5 一键检查当前 Git 是否正常
+
+```bash
+git status -sb
+git branch -vv
+git remote -v
+```
