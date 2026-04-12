@@ -1,0 +1,37 @@
+{
+    // DeerFlow 新调试流程（后端断点可稳定命中）:
+    // 1. 先停止历史服务: make stop
+    // 2. 在 VS Code 运行和调试中选择下方配置并启动:
+    //    DeerFlow: Launch Gateway (no reload)
+    // 3. 新开终端启动前端:
+    //    cd frontend && pnpm dev
+    // 4. 再开终端启动本地 nginx 反向代理:
+    //    nginx -g 'daemon off;' -c "$PWD/docker/nginx/nginx.local.conf" -p "$PWD"
+    // 5. 打开 http://localhost:2026，点击前端发送按钮触发后端断点
+    //
+    // 说明:
+    // - 本流程不再使用“附加进程”，避免 Timed out waiting for debug server to connect。
+    // - 后端由 VS Code 直接启动，且不带 --reload，进程稳定，断点命中更可靠。
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // 启动 Gateway（调试模式，无 reload）
+            "name": "DeerFlow: Launch Gateway (no reload)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "."
+            },
+            "args": [
+                "app.gateway.app:app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8001"
+            ],
+            "justMyCode": false
+        }
+    ]
+}
