@@ -12,6 +12,7 @@
     // 说明:
     // - 本流程不再使用“附加进程”，避免 Timed out waiting for debug server to connect。
     // - 后端由 VS Code 直接启动，且不带 --reload，进程稳定，断点命中更可靠。
+    
     "version": "0.2.0",
     "configurations": [
         {
